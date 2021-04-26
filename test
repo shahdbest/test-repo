@@ -1,0 +1,300 @@
+SQL> desc student;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+
+ NAME                                               VARCHAR2(50)
+ ROLLNO                                             NUMBER(38)
+ SEM                                                NUMBER(38)
+ DEPT                                               VARCHAR2(20)
+
+SQL> select * from student where dept=null;
+
+no rows selected
+
+SQL> select * from student where dept is null;
+
+NAME                                                   ROLLNO        SEM
+-------------------------------------------------- ---------- ----------
+DEPT
+--------------------
+raju                                                        3          7
+
+
+
+SQL>
+SQL> select user from dual;
+
+USER
+------------------------------
+DXCTEST
+
+SQL> desc dual;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+
+ DUMMY                                              VARCHAR2(1)
+
+SQL> select * from dual;
+
+D
+-
+X
+
+SQL> select user from student;
+
+USER
+------------------------------
+DXCTEST
+DXCTEST
+DXCTEST
+
+SQL> select name from student;
+
+NAME
+--------------------------------------------------
+raj
+raja
+raju
+
+SQL>
+SQL> select count(name) from student;
+
+COUNT(NAME)
+-----------
+          3
+
+SQL> select 10 + 20 from dual;
+
+     10+20
+----------
+        30
+
+SQL> select 10 + 20  as "result" from dual;
+
+    result
+----------
+        30
+
+SQL>
+SQL> select name from student;
+
+NAME
+--------------------------------------------------
+raj
+raja
+raju
+
+SQL> select name, rollno from student;
+
+NAME                                                   ROLLNO
+-------------------------------------------------- ----------
+raj                                                         1
+raja                                                        2
+raju                                                        3
+
+SQL>
+SQL> select name as "Student Name", rollno from student;
+
+Student Name                                           ROLLNO
+-------------------------------------------------- ----------
+raj                                                         1
+raja                                                        2
+raju                                                        3
+
+SQL> desc student;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+
+ NAME                                               VARCHAR2(50)
+ ROLLNO                                             NUMBER(38)
+ SEM                                                NUMBER(38)
+ DEPT                                               VARCHAR2(20)
+
+SQL> select name as StudentName, rollno from student;
+
+STUDENTNAME                                            ROLLNO
+-------------------------------------------------- ----------
+raj                                                         1
+raja                                                        2
+raju                                                        3
+
+SQL> select name as Student Name, rollno from student;
+select name as Student Name, rollno from student
+                       *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected
+
+
+SQL> select 10 + null from student;
+
+   10+NULL
+----------
+
+
+
+
+SQL> select 10 + null from dual;
+
+   10+NULL
+----------
+
+
+SQL>
+SQL> select 10 + 'null' from dual;
+select 10 + 'null' from dual
+            *
+ERROR at line 1:
+ORA-01722: invalid number
+
+
+SQL> select 10 | 'null' from dual;
+select 10 | 'null' from dual
+          *
+ERROR at line 1:
+ORA-00996: the concatenate operator is ||, not |
+
+
+SQL> select 10 || 'null' from dual;
+
+10||'N
+------
+10null
+
+SQL> select 'hello' from dual;
+
+'HELL
+-----
+hello
+
+SQL> select  upper('hello') from dual;
+
+UPPER
+-----
+HELLO
+
+SQL> select upper(name) from student;
+
+UPPER(NAME)
+--------------------------------------------------
+RAJ
+RAJA
+RAJU
+
+SQL> select upper(name) as NAME from student;
+
+NAME
+--------------------------------------------------
+RAJ
+RAJA
+RAJU
+
+SQL>
+SQL> select sysdate from dual;
+
+SYSDATE
+---------
+26-APR-21
+
+SQL> select upper(10) from dual;
+
+UP
+--
+10
+
+SQL> select upper(10,test) from dual;
+select upper(10,test) from dual
+       *
+ERROR at line 1:
+ORA-00909: invalid number of arguments
+
+
+SQL> select upper(10,'test') from dual;
+select upper(10,'test') from dual
+       *
+ERROR at line 1:
+ORA-00909: invalid number of arguments
+
+
+SQL> select to_char(sysdate,'dd/mm/yyyy') from dual;
+
+TO_CHAR(SY
+----------
+26/04/2021
+
+SQL> select to_char(sysdate,'mm-dd-yy hh:MM') from dual;
+
+TO_CHAR(SYSDAT
+--------------
+04-26-21 02:04
+
+SQL> select to_char(sysdate,'mm-dd-yy hh:m') from dual;
+select to_char(sysdate,'mm-dd-yy hh:m') from dual
+                       *
+ERROR at line 1:
+ORA-01821: date format not recognized
+
+
+SQL> select to_char(sysdate,'mm-dd-yy hh:mm') from dual;
+
+TO_CHAR(SYSDAT
+--------------
+04-26-21 02:04
+
+SQL> select to_char(sysdate,'mm-dd-yy hh:mi') from dual;
+
+TO_CHAR(SYSDAT
+--------------
+04-26-21 02:48
+
+SQL> select sem from student;
+
+       SEM
+----------
+         5
+         3
+         7
+
+SQL> select sum(sem) from student;
+
+  SUM(SEM)
+----------
+        15
+
+SQL> select * from student;
+
+NAME                                                   ROLLNO        SEM
+-------------------------------------------------- ---------- ----------
+DEPT
+--------------------
+raj                                                         1          5
+CSE
+
+raja                                                        2          3
+CSE
+
+raju                                                        3          7
+
+
+
+SQL> select sum(rollno) , sum(sem) from student;
+
+SUM(ROLLNO)   SUM(SEM)
+----------- ----------
+          6         15
+
+SQL> select rollno ,  sem , sem+rollno as "sum" from student;
+
+    ROLLNO        SEM        sum
+---------- ---------- ----------
+         1          5          6
+         2          3          5
+         3          7         10
+
+SQL> select rollno ,  sem , sum(sem, rollno) as "sum" from student;
+select rollno ,  sem , sum(sem, rollno) as "sum" from student
+                       *
+ERROR at line 1:
+ORA-00909: invalid number of arguments
+
+
+SQL>
