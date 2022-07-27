@@ -1,0 +1,131 @@
+create new maven project 
+-> org.apache.maven.archetype quick start
+--> group id
+--> artifact id 
+-> project name 
+
+finish 
+
+
+
+add 2 dependencies 
+
+
+--------------pom.xml
+
+
+<dependency>
+    <groupId>org.springframework</groupId>
+    <artifactId>spring-core</artifactId>
+    <version>5.3.20</version>
+</dependency>
+   
+   
+   <!-- https://mvnrepository.com/artifact/org.springframework/spring-context -->
+<dependency>
+    <groupId>org.springframework</groupId>
+    <artifactId>spring-context</artifactId>
+    <version>5.3.20</version>
+</dependency>
+   
+
+
+
+
+
+
+
+
+
+-----------------------------------------------------spring.xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:context="http://www.springframework.org/schema/context"
+xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+<bean id="student" class="test.wiprospringcc.model.Student">
+<property name="rollNo" value="45"> </property>
+<property name="name" value="rohit sharma"> </property>
+</bean>
+
+ <context:annotation-config/>  
+</beans>
+
+--------------------------------------------------------------------------student
+
+package test.wiprospringcc.model;
+
+
+public class Student {
+
+	private int rollNo;
+	private String name ;
+	public int getRollNo() {
+		return rollNo;
+	}
+	public void setRollNo(int rollNo) {
+		this.rollNo = rollNo;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public Student(int rollNo, String name) {
+		super();
+		this.rollNo = rollNo;
+		this.name = name;
+	}
+	public Student() {
+		// TODO Auto-generated constructor stub
+	}
+	@Override
+	public String toString() {
+		return "Student [rollNo=" + rollNo + ", name=" + name + "]";
+	}
+	
+	
+}
+
+----------------------------------studentService
+
+package test.wiprospringcc.service;
+
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.beans.factory.xml.XmlBeanFactory;
+import org.springframework.core.io.FileSystemResource;
+
+import test.wiprospringcc.model.Student;
+
+public class StudentService {
+
+	public static void main(String[] args) {
+		
+	//	Student student=new Student();
+	//	student.setName("virat");
+	//	student.setRollNo(18);
+	//	System.out.println(student);
+		
+	//lazy loading
+		
+	BeanFactory factory=new XmlBeanFactory(new FileSystemResource("spring.xml"));
+	Student student=(Student)factory.getBean("student");
+	System.out.println(student);
+	
+	}
+
+}
+
+
+
+
+
+
+
+
+
