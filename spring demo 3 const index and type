@@ -1,0 +1,90 @@
+---------------------------student
+
+package test.wiprospringcc.model;
+
+
+public class Student {
+
+	private int rollNo;
+	private String name ;
+	
+
+	
+	public int getRollNo() {
+		return rollNo;
+	}
+	public void setRollNo(int rollNo) {
+		this.rollNo = rollNo;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	
+	public Student( String name,int rollNo) {
+		super();
+		System.out.println("str,int");
+		this.rollNo = rollNo;
+		this.name = name;
+	}
+	
+	
+	public Student( String name,String rollNo) {
+		super();
+		System.out.println("str,str");
+		
+	}
+	
+	public Student(int rollNo, String name) {
+		super();
+		System.out.println("int,str");
+		this.rollNo = rollNo;
+		this.name = name;
+	}
+	
+	
+	public Student() {
+		// TODO Auto-generated constructor stub
+	System.out.println("def cont");
+	}
+	@Override
+	public String toString() {
+		return "Student [rollNo=" + rollNo + ", name=" + name + "]";
+	}
+	
+	
+}
+
+
+
+---------------------------xml 
+
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:context="http://www.springframework.org/schema/context"
+xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+<bean id="student" class="test.wiprospringcc.model.Student">
+<!--  str , int -->
+<constructor-arg  index="0" type="String" value="10"> </constructor-arg>
+<constructor-arg  index="1" type="int"  value="20"> </constructor-arg>
+
+</bean>
+
+ <context:annotation-config/>  
+</beans>
+
+
+
+
+
+
+
+
