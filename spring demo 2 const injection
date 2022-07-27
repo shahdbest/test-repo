@@ -1,0 +1,110 @@
+------------------student
+
+package test.wiprospringcc.model;
+
+
+public class Student {
+
+	private int rollNo;
+	private String name ;
+	
+
+	
+	public int getRollNo() {
+		return rollNo;
+	}
+	public void setRollNo(int rollNo) {
+		this.rollNo = rollNo;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public Student(int rollNo, String name) {
+		super();
+		this.rollNo = rollNo;
+		this.name = name;
+	}
+	public Student() {
+		// TODO Auto-generated constructor stub
+	System.out.println("def cont");
+	}
+	@Override
+	public String toString() {
+		return "Student [rollNo=" + rollNo + ", name=" + name + "]";
+	}
+	
+	
+}
+
+
+----------------------service 
+
+package test.wiprospringcc.service;
+
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.beans.factory.xml.XmlBeanFactory;
+import org.springframework.core.io.FileSystemResource;
+
+import test.wiprospringcc.model.Student;
+
+public class StudentService {
+
+	public static void main(String[] args) {
+		
+	//lazy loading
+		
+		
+		//Student student2=new Student(18,"virat"); 
+		//System.out.println(student);
+		
+		
+	BeanFactory factory=new XmlBeanFactory(new FileSystemResource("spring.xml"));
+	Student student=(Student)factory.getBean("student");
+	
+	
+	System.out.println(student);
+	
+	}
+
+}
+
+
+----------------------spring.xml 
+
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:context="http://www.springframework.org/schema/context"
+xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+<bean id="student" class="test.wiprospringcc.model.Student">
+<constructor-arg value="10"> </constructor-arg>
+<constructor-arg value="sachin"> </constructor-arg>
+
+</bean>
+
+ <context:annotation-config/>  
+</beans>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
