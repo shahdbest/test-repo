@@ -1,0 +1,205 @@
+------------AppConfig
+
+package test.wiprospringcc.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+
+import test.wiprospringcc.model.Address;
+import test.wiprospringcc.model.Student;
+
+@ComponentScan(basePackages = {"test.wiprospringcc.model"})
+@Configuration
+public class AppConfig {
+
+	/*
+	 * @Bean() public Student getStudInfo() { return new Student(18, "Virat kohli");
+	 * }
+	 */
+
+	/*
+	 * @Bean(name="adr1") public Address getAddress() { return new Address("pune",
+	 * "maharastra"); }
+	 */
+
+	/*
+	 * @Bean(name="adr2") 
+	 * public Address getAddress1() 
+	 * { return new Address(); }
+	 */
+
+	
+}
+
+---------------------student
+package test.wiprospringcc.model;
+
+import javax.annotation.PostConstruct;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
+
+@Component
+public class Student {
+
+	private int rollNo;
+	private String name ;
+
+	@Qualifier("address")
+	@Autowired
+	private Address address;
+	
+
+
+public Student(int rollNo, String name, Address address) {
+	
+		super();
+	System.out.println("int,str,address");
+		this.rollNo = rollNo;
+	this.name = name;
+	this.address = address;
+}
+	public Address getAddress() {
+	return address;
+}
+public void setAddress(Address address) {
+System.out.println("setter called");
+	this.address = address;
+}
+	public int getRollNo() {
+		return rollNo;
+	}
+	public void setRollNo(int rollNo) {
+		this.rollNo = rollNo;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	
+	public Student( String name,int rollNo) {
+		super();
+		System.out.println("str,int");
+		this.rollNo = rollNo;
+		this.name = name;
+	}
+	
+	
+	public Student( String name,String rollNo) {
+		super();
+		System.out.println("str,str");
+		
+	}
+	
+	public Student(int rollNo, String name) {
+		super();
+		System.out.println("int,str");
+		this.rollNo = rollNo;
+		this.name = name;
+	}
+	
+	
+	public Student() {
+	name="Rohit";
+	rollNo=45;
+	System.out.println("def cont");
+	}
+	@Override
+	public String toString() {
+		return "Student [rollNo=" + rollNo + ", name=" + name + ", address=" + address + "]";
+	}
+	
+	
+	
+}
+
+
+----------------------------------address
+
+
+package test.wiprospringcc.model;
+
+import org.springframework.stereotype.Component;
+
+@Component
+public class Address {
+
+	private String city;
+	private String state;
+	public String getCity() {
+		return city;
+	}
+	public void setCity(String city) {
+		this.city = city;
+	}
+	public String getState() {
+		return state;
+	}
+	public void setState(String state) {
+		this.state = state;
+	}
+	
+	
+	public Address() {
+		this.city="Bangalore";
+		this.state="Karnataka";	
+	}
+	public Address(String city, String state) {
+		super();
+		this.city = city;
+		this.state = state;
+	}
+	@Override
+	public String toString() {
+		return "Address [city=" + city + ", state=" + state + "]";
+	}
+	
+	
+	
+}
+
+
+---------------service
+
+
+package test.wiprospringcc.service;
+
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.beans.factory.xml.XmlBeanFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.core.io.FileSystemResource;
+
+import test.wiprospringcc.config.AppConfig;
+import test.wiprospringcc.model.Address;
+import test.wiprospringcc.model.Student;
+
+public class StudentService {
+
+	public static void main(String[] args) {
+		
+		
+					
+ApplicationContext factory=new AnnotationConfigApplicationContext(AppConfig.class); 
+	
+	
+	Student student=factory.getBean(Student.class);
+		
+		System.out.println("Student "+student);
+	
+	
+	
+	}
+
+}
+
+
+
+
