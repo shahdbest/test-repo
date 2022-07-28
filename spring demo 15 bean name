@@ -1,0 +1,130 @@
+--------------------------appConfig
+
+package test.wiprospringcc.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import test.wiprospringcc.model.Address;
+import test.wiprospringcc.model.Student;
+
+@Configuration
+public class AppConfig {
+
+	@Bean
+	public Student getStudInfo()
+	{
+		return new Student(18, "Virat kohli");
+	}
+
+	@Bean(name="adr1")
+	public Address getAddress()
+	{
+		return new Address("bangalore", "karnataka");
+	}
+	
+	@Bean(name="adr2")
+	public Address getAddress1()
+	{
+		return new Address("bijapur", "karnataka");
+	}
+}
+
+-----------------------------------student
+
+
+package test.wiprospringcc.model;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+
+public class Student {
+
+	private int rollNo;
+	private String name ;
+	//provides meta data 
+
+	@Autowired
+	@Qualifier("adr2")
+
+	private Address address;
+	
+
+public void myInit()
+{
+System.out.println("bean is being created ");	
+}
+	
+
+
+public void destroy()
+{
+System.out.println("bean is destroyed");	
+}
+
+
+public Student(int rollNo, String name, Address address) {
+	
+		super();
+	System.out.println("int,str,address");
+		this.rollNo = rollNo;
+	this.name = name;
+	this.address = address;
+}
+	public Address getAddress() {
+	return address;
+}
+public void setAddress(Address address) {
+System.out.println("setter called");
+	this.address = address;
+}
+	public int getRollNo() {
+		return rollNo;
+	}
+	public void setRollNo(int rollNo) {
+		this.rollNo = rollNo;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	
+	public Student( String name,int rollNo) {
+		super();
+		System.out.println("str,int");
+		this.rollNo = rollNo;
+		this.name = name;
+	}
+	
+	
+	public Student( String name,String rollNo) {
+		super();
+		System.out.println("str,str");
+		
+	}
+	
+	public Student(int rollNo, String name) {
+		super();
+		System.out.println("int,str");
+		this.rollNo = rollNo;
+		this.name = name;
+	}
+	
+	
+	public Student() {
+		// TODO Auto-generated constructor stub
+	System.out.println("def cont");
+	}
+	@Override
+	public String toString() {
+		return "Student [rollNo=" + rollNo + ", name=" + name + ", address=" + address + "]";
+	}
+	
+	
+	
+}
+
+
