@@ -1,0 +1,127 @@
+to send secure or large info use request mapping over path variables 
+
+
+------------------controller
+
+package com.example.springccdemo.controller;
+
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.springccdemo.model.UserAuth;
+
+@RestController
+@RequestMapping("players")
+public class PlayerController {
+
+	@GetMapping
+	public String getData()
+	{
+		return "hello world get mapping";
+	}
+	
+	
+	@GetMapping("n")
+	public String getData1()
+	{
+		return "hello world get mapping new";
+	}
+	
+	@GetMapping("team/{teamName}")
+	public String getplayers(@PathVariable String teamName)
+	{
+		return "team searched by user is "+teamName;
+	}
+	
+	
+	@GetMapping("login/{uname}/{pass}")
+	public String getlogin(@PathVariable String uname, @PathVariable String pass)
+	{
+		return uname+" "+pass;
+	}
+	
+	
+	@PostMapping("securelogin")
+	public UserAuth getlogin(@RequestBody UserAuth userAuth)
+	{
+		return userAuth;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	@PostMapping
+	public String saveData()
+	{
+		return "hello world post mapping";
+	}
+	
+	
+	@PutMapping
+	public String putData()
+	{
+		return "hello world put mapping";
+	}
+	
+	@DeleteMapping
+	public String deleteData()
+	{
+		return "hello world delete mapping";
+	}
+	
+}
+
+-------------------------------urls 
+
+method get
+http://localhost:1234/players/login/rohit/pass123
+
+----------------------
+
+method post 
+
+url 
+
+http://localhost:1234/players/securelogin
+
+-> body -> raw - > json
+
+
+{
+    "userName":"rohit",
+    "password":"pass333"
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
