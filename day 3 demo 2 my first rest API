@@ -1,0 +1,96 @@
+
+NOTE : ensure ur controller is in same package as ur main class
+----------app.properties
+server.port=1234
+
+
+-----------------controller 
+
+package com.example.springccdemo.controller;
+
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("players")
+public class PlayerController {
+
+	@GetMapping
+	public String getData()
+	{
+		return "hello world get mapping";
+	}
+	
+	
+	@GetMapping("n")
+	public String getData1()
+	{
+		return "hello world get mapping new";
+	}
+	
+	
+	@PostMapping
+	public String saveData()
+	{
+		return "hello world post mapping";
+	}
+	
+	
+	@PutMapping
+	public String putData()
+	{
+		return "hello world put mapping";
+	}
+	
+	@DeleteMapping
+	public String deleteData()
+	{
+		return "hello world delete mapping";
+	}
+	
+}
+
+----------------------------
+
+right click run as spring boot project 
+
+
+------------------------open postman
+method get 
+url http://localhost:1234/players
+
+---------------
+method get 
+url http://localhost:1234/players/n
+
+-------------------
+
+method post 
+url http://localhost:1234/players
+
+--------------------
+
+method put
+url http://localhost:1234/players
+----------------------
+
+method delete 
+url http://localhost:1234/players
+
+
+
+
+
+
+
+
+
+
+
+
+
+
