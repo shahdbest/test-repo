@@ -1,0 +1,193 @@
+--> download a spring boot project with 
+ --> web
+ -> h2
+ ->spring data jpa 
+ 
+ 
+ ----------------------app.prop 
+ 
+ 
+ 
+server.port=1234
+spring.h2.console.enabled=true
+spring.datasource.url=jdbc:h2:mem:testdb
+
+----------------run and test h2 console 
+
+http://localhost:1234/h2-console
+
+jdbc:url : jdbc:h2:mem:testdb
+
+------------------------------------------------model 
+
+
+package com.example.springcccrudh2.model;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
+public class Mobile {
+
+	@Id
+	String name;
+	String  brand;
+	float 	price;
+	
+	public Mobile() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public Mobile(String name, String brand, float price) {
+		super();
+		this.name = name;
+		this.brand = brand;
+		this.price = price;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getBrand() {
+		return brand;
+	}
+
+	public void setBrand(String brand) {
+		this.brand = brand;
+	}
+
+	public float getPrice() {
+		return price;
+	}
+
+	public void setPrice(float price) {
+		this.price = price;
+	}
+
+	@Override
+	public String toString() {
+		return "Mobile [name=" + name + ", brand=" + brand + ", price=" + price + "]";
+	}
+	
+	
+}
+
+-----------------dao 
+
+package com.example.springcccrudh2.dao;
+
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
+
+import com.example.springcccrudh2.model.Mobile;
+
+@Repository
+public interface MobileDao extends CrudRepository<Mobile, String> {
+
+}
+
+
+-----------------------service 
+
+
+package com.example.springcccrudh2.service;
+
+import org.springframework.stereotype.Service;
+
+import com.example.springcccrudh2.model.Mobile;
+
+@Service
+public interface MobileService {
+
+	
+	public Mobile saveMobile(Mobile mobile);
+}
+
+
+
+--------------------impl 
+
+package com.example.springcccrudh2.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.example.springcccrudh2.dao.MobileDao;
+import com.example.springcccrudh2.model.Mobile;
+
+@Service
+public class MobileServiceImpl implements MobileService{
+
+	@Autowired
+	MobileDao mobileDao;
+	
+	@Override
+	public Mobile saveMobile(Mobile mobile) {
+		
+		return mobileDao.save(mobile);
+	}
+	
+	
+
+}
+
+
+---------------controller
+
+package com.example.springcccrudh2.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.springcccrudh2.model.Mobile;
+import com.example.springcccrudh2.service.MobileService;
+
+@RestController
+@RequestMapping("mobiles")
+public class MobileController {
+
+	
+	@Autowired
+	MobileService mobileService;
+	
+	@PostMapping 
+	public ResponseEntity<Mobile> saveMobile(@RequestBody Mobile mobile)
+	{
+		Mobile savedMobile= mobileService.saveMobile(mobile);
+		return new ResponseEntity<Mobile>(savedMobile,HttpStatus.CREATED);
+	}
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
