@@ -1,0 +1,31 @@
+-> visit https://start.spring.io/
+-> download a springboot template
+-> with 1 spring web dependency 
+->java version 8
+
+-> give artofact id 
+and a proper 3 part package name 
+-> generate ctrl 
+-----------------------------------------------------
+import the project in sts
+
+-> file import 
+-> general  -> project from folder or archive
+-> archive 
+-> select the downloaded project
+-> select only maven project
+
+wait for the project to get ready 
+
+
+
+
+
+
+
+
+
+
+
+
+
