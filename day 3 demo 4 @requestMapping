@@ -1,5 +1,43 @@
 to send secure or large info use request mapping over path variables 
 
+----model 
+
+package com.example.springccdemo.model;
+
+public class UserAuth {
+
+	String userName;
+	String password;
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
+	public UserAuth() {
+		// TODO Auto-generated constructor stub
+	}
+	public UserAuth(String userName, String password) {
+		super();
+		this.userName = userName;
+		this.password = password;
+	}
+	@Override
+	public String toString() {
+		return "UserAuth [userName=" + userName + ", password=" + password + "]";
+	}
+	
+	
+	
+}
+
 
 ------------------controller
 
