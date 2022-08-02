@@ -1,0 +1,174 @@
+--------------------dao 
+
+package com.example.springcccrudh2.dao;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
+
+import com.example.springcccrudh2.model.Mobile;
+
+@Repository
+public interface MobileDao extends CrudRepository<Mobile, String> {
+//save , findall , findbyid , delete
+	
+	//select * from Mobile where brand=?
+
+	public List<Mobile> findByBrand(String brand);
+
+	@Query("select p from Mobile p where p.price=:price")
+	public List<Mobile> findByMobilePrice(@Param("price") float price);
+
+}
+
+
+
+--------------------service 
+
+
+package com.example.springcccrudh2.service;
+
+import java.util.List;
+
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Service;
+
+import com.example.springcccrudh2.model.Mobile;
+
+@Service
+public interface MobileService {
+
+	
+	public Mobile saveMobile(Mobile mobile);
+	
+	public List<Mobile> getMobiles();
+	public Mobile getMobileById(String name);
+
+	public List<Mobile> findByBrand(String brand);
+	
+	public List<Mobile> findByMobilePrice(@Param("price") float price);
+}
+
+
+
+---------impl 
+
+
+package com.example.springcccrudh2.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Service;
+
+import com.example.springcccrudh2.dao.MobileDao;
+import com.example.springcccrudh2.model.Mobile;
+
+@Service
+public class MobileServiceImpl implements MobileService{
+
+	@Autowired
+	MobileDao mobileDao;
+	
+	@Override
+	public Mobile saveMobile(Mobile mobile) {
+		
+		return mobileDao.save(mobile);
+	}
+	
+	@Override
+	public List<Mobile> getMobiles()
+	{
+		return (List<Mobile>)mobileDao.findAll();
+	}
+
+	public Mobile getMobileById(String name)
+	{
+		return mobileDao.findById(name).get();
+	}
+
+	public List<Mobile> findByBrand(String brand)
+	{
+		
+		return mobileDao.findByBrand(brand);
+	}
+	public List<Mobile> findByMobilePrice(@Param("price") float price)
+	{
+		return mobileDao.findByMobilePrice(price);
+	}
+}
+
+
+-------------------------controller 
+
+package com.example.springcccrudh2.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.springcccrudh2.model.Mobile;
+import com.example.springcccrudh2.service.MobileService;
+
+@RestController
+@RequestMapping("mobiles")
+public class MobileController {
+
+	
+	@Autowired
+	MobileService mobileService;
+	
+	@PostMapping 
+	public ResponseEntity<Mobile> saveMobile(@RequestBody Mobile mobile)
+	{
+		
+		Mobile savedMobile= mobileService.saveMobile(mobile);
+		return new ResponseEntity<Mobile>(savedMobile,HttpStatus.CREATED);
+	}
+	
+	@GetMapping
+	public ResponseEntity<List<Mobile>> getMobiles()
+	{
+		List<Mobile> mobiles=mobileService.getMobiles();
+		return new ResponseEntity<List<Mobile>>(mobiles,HttpStatus.FOUND);
+	}
+
+	@GetMapping("{name}")
+	public ResponseEntity<Mobile> getMobile(@PathVariable String name)
+	{
+	Mobile mobile=mobileService.getMobileById(name);
+		return new ResponseEntity<Mobile>(mobile,HttpStatus.FOUND);
+	}
+	
+
+	@GetMapping("/brand/{brand}")
+	public ResponseEntity<List<Mobile>> getMobileByBrand(@PathVariable String brand)
+	{
+		List<Mobile> mobiles=mobileService.findByBrand(brand);
+		return new ResponseEntity<List<Mobile>>(mobiles,HttpStatus.FOUND);
+	}
+	
+	@GetMapping("/price/{price}")
+	public ResponseEntity<List<Mobile>> getMobileByPrice(@PathVariable float price)
+	{
+		List<Mobile> mobiles=mobileService.findByMobilePrice(price);
+		return new ResponseEntity<List<Mobile>>(mobiles,HttpStatus.FOUND);
+	}
+	
+	
+}
+
+
